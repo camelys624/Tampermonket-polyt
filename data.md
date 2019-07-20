@@ -38,3 +38,7 @@ getPriceGradeSeats()
 7. isShowInitStage
 8. getOnlyAppointObj
 9. commitSeat()
+
+### 提交数据
+
+![](./submit.png)

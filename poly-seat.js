@@ -24,8 +24,33 @@
         data: data,
         dataType: 'json',
         success: function(res) {
-            let price = gankT(res.data);
-            console.log('price', price)
+            let ticket = gankT(res.data);
+            console.log(ticket)
+            let data = [{
+                "price":ticket.price,   //票价
+                "priceId": ticket.pid,      //票价Id
+                "seat":ticket.sid,          //座位ID
+                "count": "1",        //张数
+                "actuallyPrice": ticket.price,  //实际票价
+                "freeTicketCount": "1"  //套票数量
+            }]
+            let submitParam = {
+                data: data,
+                "param" : {
+                    "theaterId" : theaterId,
+                    "projectId" : projectId,
+                    "date" : (new Date().getTime()),
+                    "showId" : showId,
+                    "showTime" : showTime,
+                    "placeId" : placeId,
+                    "venueId" : venueId,
+                    "isRealName" : isRealName,
+                    "sign" : sign,
+                    "manageWayCode" : manageWayCode
+                }
+            }
+            $("#param").val(JSON.stringify(submitParam));
+            $("#form").submit();
         },
         error: function(err) {
             console.log('错误', err)
@@ -39,7 +64,8 @@
         function getPrice(ticket){
             for(let i = 0; i < priceList.length - 1; i++){
                 if(priceList[i].ticketPriceId == ticket.pid){
-                    return priceList[i].price
+                    ticket.price = priceList[i].price;
+                    return ticket;
                 }
             }
         }
@@ -53,6 +79,8 @@
         let flag = midTArr.length
         let recursive = function() {
             let haft = flag >> 1;
+            if (!haft) return;
+            console.log(haft)
             for(let i = haft; i < midTArr.length - 1; i++){
                 for(let j = midTArr[i]; j < midTArr[i] + 7; j++){
                     if(data[j].sst.id == 0) return data[j]
