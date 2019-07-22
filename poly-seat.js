@@ -79,7 +79,7 @@
         let flag = midTArr.length
         let recursive = function() {
             let haft = flag >> 1;
-            if (!flag) return;
+            if (!flag) return void 0;
             console.log(haft)
             for(let i = haft; i < flag; i++){
                 for(let j = midTArr[i]; j < midTArr[i] + 7; j++){
